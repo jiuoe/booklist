@@ -1,13 +1,16 @@
 package com.example.booklist;
-import java.util.ArrayList;
+
 
 public class Book {
     int imageView;
     String name;
+    String writer;
 
-    public Book(String s, int book_2) {
+
+    public Book(String s, int book_2,String w) {
         this.name = s;
         this.imageView=book_2;
+        this.writer=w;
     }
 
     public int getCoverResourceId() {
@@ -17,7 +20,7 @@ public class Book {
     public String getTitle() {
         return name;
     }
-    ArrayList<Book> getListBook(ArrayList<Book> mNewsList){
-        return mNewsList;
-    }
+
+    public String getWriter(){return writer;}
+
 }
