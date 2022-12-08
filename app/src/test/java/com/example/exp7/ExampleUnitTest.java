@@ -1,4 +1,4 @@
-package com.example.booklist;
+package com.example.exp7;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.example.booklist;
+package com.example.exp7;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.booklist", appContext.getPackageName());
+        assertEquals("com.example.exp7", appContext.getPackageName());
     }
 }

@@ -1,5 +1,4 @@
-package com.example.booklist;
-
+package com.example.exp7;
 
 public class Book {
     int imageView;

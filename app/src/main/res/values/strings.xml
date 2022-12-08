@@ -1,17 +1,4 @@
 <resources>
-    <string name="app_name">booklist</string>
-    <string name="todo">TODO</string>
-    <string name="todo_1">TODO</string>
+    <string name="app_name">exp7</string>
     <string name="todo1">TODO</string>
-    <string name="add">+</string>
-    <string name="tittle">书名:</string>
-    <string name="writer">作者名:</string>
-    <string name="input_tittle">请输入书名…</string>
-    <string name="input_writer">请输入作者名…</string>
-    <string name="todo3">TODO</string>
-    <string name="back">返回</string>
-    <string name="yes">确认</string>
-    <string name="cancel">取消</string>
-    <string name="输入提示">please input something</string>
-
 </resources>
