@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">exp7</string>
     <string name="todo1">TODO</string>
+    <string name="yes">确认</string>
+    <string name="no">取消</string>
+    <string name="book_name">图书名称</string>
 </resources>

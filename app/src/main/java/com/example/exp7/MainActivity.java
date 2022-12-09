@@ -1,5 +1,8 @@
 package com.example.exp7;
 
+import static com.example.exp7.EditBookActivity.get_position;
+import static com.example.exp7.EditBookActivity.get_position;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -28,19 +31,22 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     public static final int delete = 0;
     public static final int update = 1;
+    public static final int New = 2;
+    static List<Book> mNewsList = new ArrayList<Book>();
     RecyclerView mRecyclerView;
-    MyAdapter mMyAdapter;
+    static MyAdapter mMyAdapter;
     Book book1 = new Book("软件项目管理案例教程（第4版）", R.drawable.book_2,"xx");
     Book book2 = new Book("创新工程实践", R.drawable.book_no_name,"xx");
     Book book3 = new Book("信息安全数学基础（第2版）", R.drawable.book_1,"xx");
+
     // 构造一些数据
-    List<Book> mNewsList = new ArrayList<Book>() {{
+/*    List<Book> mNewsList = new ArrayList<Book>() {{
         add(book1);
 
         add(book2);
 
         add(book3);
-    }};
+    }};*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +59,11 @@ public class MainActivity extends AppCompatActivity {
         //Objects.requireNonNull(getSupportActionBar()).hide();
 
 
+        mNewsList.add(book1);
 
+        mNewsList.add(book2);
+
+        mNewsList.add(book3);
         mMyAdapter = new MyAdapter();
 
 
@@ -82,14 +92,25 @@ public class MainActivity extends AppCompatActivity {
             mRecyclerView.setLayoutManager(layoutManager);*/
             System.out.println(position);
             mNewsList.remove(position);
-
             mMyAdapter.notifyDataSetChanged();
-        } else if (item.getItemId() == update) {
+          /*  System.out.println(mNewsList.get(position));*/
+
+        } if (item.getItemId() == update) {
+            get_position(position);
+            Intent intent = new Intent(MainActivity.this, EditBookActivity.class);
+            startActivity(intent);
 
         }
+        if(item.getItemId()==New){
+            Book book=new Book("xx", R.drawable.book_no_name,"xx");
+            mNewsList.add(book);
+            mMyAdapter.notifyDataSetChanged();
+        };
         return super.onContextItemSelected(item);
     }
-
+    public static void book_edit(String str,int position) {
+        mNewsList.get(position).book_title_edit(str);
+    }
     public  class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHoder> {
 
         private int position;
@@ -123,12 +144,6 @@ public class MainActivity extends AppCompatActivity {
             super.onViewRecycled(holder);
         }
 
-        public void delete(int position)
-        {
-
-            mNewsList.remove(position);
-        }
-
         @Override
         public int getItemCount() {
             //需要展示的个数
@@ -145,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
                 textView= itemView.findViewById(R.id.text_view_book_title);
                 imageViewImage=itemView.findViewById(R.id.image_view_book);
-                textView_writer=itemView.findViewById(R.id.textVie_writer);
+                textView_writer=itemView.findViewById(R.id.textView_writer);
                 itemView.setOnCreateContextMenuListener(this);
             }
 
@@ -154,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 menu.setHeaderTitle("menu");
                 menu.add(ContextMenu.NONE,0,ContextMenu.NONE,"删除");
                 menu.add(ContextMenu.NONE,1,ContextMenu.NONE,"修改");
+                menu.add(ContextMenu.NONE,2,ContextMenu.NONE,"新建");
             }
         }
     }

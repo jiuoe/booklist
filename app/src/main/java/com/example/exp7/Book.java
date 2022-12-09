@@ -21,5 +21,6 @@ public class Book {
     }
 
     public String getWriter(){return writer;}
+    public void book_title_edit(String tit){this.name=tit;}
 
 }
