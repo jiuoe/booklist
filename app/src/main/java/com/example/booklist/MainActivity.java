@@ -28,10 +28,12 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity{
     @SuppressLint("NotifyDataSetChanged")
     RecyclerView mRecyclerView;
-    MyAdapter mMyAdapter;
+    static MyAdapter mMyAdapter;
     Button add;
     static List<Book> mNewsList = new ArrayList<>();
-
+    public static final int delete = 0;
+    public static final int update = 1;
+    public static final int New = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,20 +83,36 @@ public class MainActivity extends AppCompatActivity{
 //      在list中添加数据，并通知条目加入一条
         mNewsList.add(book);
 
-        //添加动画
 
     }
+    @SuppressLint("NotifyDataSetChanged")
+    ///contextmenu选项
+    public boolean onContextItemSelected(MenuItem item) {
+        int position;
+        position = mMyAdapter.getContextMenuPosition();
+        if (item.getItemId() == delete) {
+            mNewsList.remove(position);
+            mMyAdapter.notifyDataSetChanged();
+        }
+        else if (item.getItemId() == update) {
+            book_edit.get_position(position);
+            System.out.println(position);
+            Intent intent=new Intent(MainActivity.this,book_edit.class);
+            startActivity(intent);
 
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        }
         return super.onContextItemSelected(item);
     }
 
 
-
+    public static void book_edit(String str,int position) {
+        mNewsList.get(position).book_title_edit(str);
+    }
+    ///适配器
     public static class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHoder> {
-
+        private int position;
+        public int getContextMenuPosition() {return position; }
+        public void setContextMenuPosition(int position) { this.position = position; }
         @NonNull
         @Override
 
@@ -112,8 +130,15 @@ public class MainActivity extends AppCompatActivity{
             holder.textView.setText(book.getTitle());
             holder.imageViewImage.setImageResource(book.getCoverResourceId());
             holder.textView_writer.setText(book.getWriter());
+            holder.itemView.setOnLongClickListener(v -> {
+                setContextMenuPosition(holder.getLayoutPosition());
+                return false;
+            });
         }
-
+        public void onViewRecycled(MyAdapter.ViewHoder holder) {
+            holder.itemView.setOnLongClickListener(null);
+            super.onViewRecycled(holder);
+        }
         @Override
         public int getItemCount() {
             //需要展示的个数
@@ -136,6 +161,9 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+                contextMenu.setHeaderTitle("menu");
+                contextMenu.add(ContextMenu.NONE,0,ContextMenu.NONE,"删除");
+                contextMenu.add(ContextMenu.NONE,1,ContextMenu.NONE,"修改");
             }
         }
     }

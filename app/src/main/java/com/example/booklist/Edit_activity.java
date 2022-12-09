@@ -23,6 +23,7 @@ public class Edit_activity extends AppCompatActivity {
     EditText book_title;
     EditText book_writer;
 
+    static int position;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +69,5 @@ public class Edit_activity extends AppCompatActivity {
             }
         });
     }
-
 
 }
