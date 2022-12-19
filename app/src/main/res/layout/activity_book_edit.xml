@@ -18,7 +18,9 @@
             android:id="@+id/menu_book_title"
             android:layout_width="match_parent"
             android:layout_height="61dp"
-            android:text="@string/book_name" />
+            android:text="@string/book_name"
+            android:gravity="center"
+            android:textSize="20sp"/>
 
         <EditText
             android:id="@+id/book_edit"

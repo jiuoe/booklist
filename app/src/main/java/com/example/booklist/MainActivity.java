@@ -12,11 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
-
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity{
     RecyclerView mRecyclerView;
     static MyAdapter mMyAdapter;
     Button add;
+    ImageButton search;
+    private DrawerLayout mDrawerLayout;
     static ArrayList<Book> mNewsList = new ArrayList<>();
     public static final int delete = 0;
     public static final int update = 1;
@@ -41,16 +45,24 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mNewsList=(new Datasaver().Load(MainActivity.this.getBaseContext()));
-        System.out.println("list:"+mNewsList);
-
+        System.out.println("list:"+mNewsList);//数组读取文件
 
         mRecyclerView = findViewById(R.id.recyclerview);
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+
+        mDrawerLayout=findViewById(R.id.drawer_layout);
+        findViewById(R.id.menu).setOnClickListener(v -> {
+            //打开滑动菜单  左侧出现
+            mDrawerLayout.openDrawer(GravityCompat.START);
+        });//打开抽屉菜单
+
+
         add = findViewById(R.id.button_add);
         add.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, Edit_activity.class);
             startActivity(intent);
-        });
+        });//add按钮
 
         // 构造一些数据
         if(mNewsList.size()==0) {

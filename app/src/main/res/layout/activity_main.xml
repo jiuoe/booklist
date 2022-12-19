@@ -1,37 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".MainActivity">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <include
         android:id="@+id/include"
-        layout="@layout/search_tittle" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
+        layout="@layout/main_title" />
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/include"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="-16dp" />
+        android:layout_height="30dp"
+        android:paddingHorizontal="4dp"
+        tools:ignore="MissingConstraints">
 
-    <Button
-        android:id="@+id/button_add"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="24dp"
+        <ImageButton
+            android:id="@+id/menu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/menu"
+            tools:ignore="MissingConstraints,TouchTargetSizeCheck"
+            tools:layout_editor_absoluteY="0dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/design_default_color_background"
+        android:gravity="center">
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/nav_header"
+            app:menu="@menu/nav_menu"/>
 
-        android:background="@drawable/add_button"
-        android:text="@string/add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.908"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
