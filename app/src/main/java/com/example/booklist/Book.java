@@ -1,7 +1,9 @@
 package com.example.booklist;
 
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     int imageView;
     String name;
     String writer;

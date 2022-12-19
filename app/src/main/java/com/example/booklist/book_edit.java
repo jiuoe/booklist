@@ -16,6 +16,7 @@ public class book_edit extends AppCompatActivity {
     String title;
     static int position;
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,20 +31,13 @@ public class book_edit extends AppCompatActivity {
 
         yes=findViewById(R.id.button_yes);
         no=findViewById(R.id.button_no);
-        no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {finish();
-            }
-        });
-        yes.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onClick(View v) {
-                title=edit.getText().toString();
-                MainActivity.book_edit(title, position);
-                MainActivity.mMyAdapter.notifyDataSetChanged();
-                finish();
-            }
+        no.setOnClickListener(v -> finish());
+        yes.setOnClickListener(v -> {
+            title=edit.getText().toString();
+            MainActivity.book_edit(title, position);
+            MainActivity.mMyAdapter.notifyDataSetChanged();
+            new Datasaver().Save(book_edit.this.getBaseContext(),MainActivity.mNewsList);
+            finish();
         });
     }
     public static void get_position(int pos){
