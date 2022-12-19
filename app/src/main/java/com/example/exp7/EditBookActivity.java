@@ -4,10 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import java.util.Objects;
+
 
 public class EditBookActivity extends AppCompatActivity {
     EditText edit;
@@ -16,38 +17,36 @@ public class EditBookActivity extends AppCompatActivity {
     Book book;
     String title;
     static int position;
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_book);
 
 
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         book=MainActivity.mNewsList.get(position);
-        edit=findViewById(R.id.book_edit);
+        init();
         edit.setText(book.getTitle());
 
 
-        yes=findViewById(R.id.button_yes);
-        no=findViewById(R.id.button_no);
-        no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {finish();
-            }
-        });
-        yes.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onClick(View v) {
-                title=edit.getText().toString();
-                MainActivity.book_edit(title, position);
-                MainActivity.mMyAdapter.notifyDataSetChanged();
-                finish();
-            }
+        no.setOnClickListener(v -> finish());
+        yes.setOnClickListener(v -> {
+            title=edit.getText().toString();
+            MainActivity.book_edit(title, position);
+            MainActivity.mMyAdapter.notifyDataSetChanged();
+            new Datasaver().Save(EditBookActivity.this.getBaseContext(),MainActivity.mNewsList);
+            finish();
+
         });
     }
+
     public static void get_position(int pos){
         position=pos;
     }
+    public void init(){
+        edit=findViewById(R.id.book_edit);
+        yes=findViewById(R.id.button_yes);
+        no=findViewById(R.id.button_no);}
 }
