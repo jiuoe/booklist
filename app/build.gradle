@@ -6,7 +6,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.booklist"
+        applicationId "com.example.exp13"
         minSdk 21
         targetSdk 32
         versionCode 1
@@ -35,9 +35,4 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-
-    //添加material库
-    implementation 'com.google.android.material:material:1.2.1'
-
-
 }
