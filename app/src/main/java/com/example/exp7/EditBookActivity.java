@@ -26,7 +26,7 @@ public class EditBookActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        book=MainActivity.mNewsList.get(position);
+        book=FragmentOne.mNewsList.get(position);
         init();
         edit.setText(book.getTitle());
 
@@ -34,9 +34,9 @@ public class EditBookActivity extends AppCompatActivity {
         no.setOnClickListener(v -> finish());
         yes.setOnClickListener(v -> {
             title=edit.getText().toString();
-            MainActivity.book_edit(title, position);
-            MainActivity.mMyAdapter.notifyDataSetChanged();
-            new Datasaver().Save(EditBookActivity.this.getBaseContext(),MainActivity.mNewsList);
+            FragmentOne.book_edit(title, position);
+
+            new Datasaver().Save(EditBookActivity.this.getBaseContext(),FragmentOne .mNewsList);
             finish();
 
         });
