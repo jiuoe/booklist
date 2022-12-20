@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -22,6 +23,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.navigation.NavigationView;
+
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -31,7 +36,8 @@ public class MainActivity extends AppCompatActivity{
     RecyclerView mRecyclerView;
     static MyAdapter mMyAdapter;
     Button add;
-    ImageButton search;
+    private NavigationView navView;//导航视图
+
     private DrawerLayout mDrawerLayout;
     static ArrayList<Book> mNewsList = new ArrayList<>();
     public static final int delete = 0;
@@ -56,6 +62,20 @@ public class MainActivity extends AppCompatActivity{
             //打开滑动菜单  左侧出现
             mDrawerLayout.openDrawer(GravityCompat.START);
         });//打开抽屉菜单
+        navView = findViewById(R.id.nav_view);//item控制
+        navView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.item_search:
+                    Intent intent = new Intent(MainActivity.this, book_search.class);
+                    startActivity(intent);
+                    break;
+                default:
+                    break;
+            }
+            //关闭滑动菜单
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
 
 
         add = findViewById(R.id.button_add);
@@ -81,6 +101,8 @@ public class MainActivity extends AppCompatActivity{
         mRecyclerView.addItemDecoration(mDivider);
 
     }
+
+
     @SuppressLint("NotifyDataSetChanged")
     //  添加数据
     public static void addData(Book book) {
@@ -89,18 +111,14 @@ public class MainActivity extends AppCompatActivity{
 
 
     }
+    //导航菜单点击
+
     @SuppressLint("NotifyDataSetChanged")
     ///contextmenu选项
     public boolean onContextItemSelected(MenuItem item) {
         int position;
         position = mMyAdapter.getContextMenuPosition();
         if (item.getItemId() == delete) {
-            /*System.out.println(position);
-            mMyAdapter.delete(position);
-
-            mRecyclerView.setAdapter(mMyAdapter);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            mRecyclerView.setLayoutManager(layoutManager);*/
             mNewsList.remove(position);
             mMyAdapter.notifyDataSetChanged();
             new Datasaver().Save(MainActivity.this.getBaseContext(),mNewsList);
@@ -134,10 +152,6 @@ public class MainActivity extends AppCompatActivity{
 
             return new ViewHoder(view);
         }
-        public void delete(int position)
-        {
-            mNewsList.remove(position);
-        }
         @Override
         public void onBindViewHolder(@NonNull MyAdapter.ViewHoder holder, int position) {
             Book book=mNewsList.get(position);
@@ -159,11 +173,12 @@ public class MainActivity extends AppCompatActivity{
             return mNewsList.size();
         }
         //需要定义一个内部类继承ViewHolder
-         class ViewHoder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
+        static class ViewHoder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
-            private final TextView textView;
-            private final TextView textView_writer;
-            private final ImageView imageViewImage;
+            public final TextView textView;
+            public final TextView textView_writer;
+            public final ImageView imageViewImage;
+
             public ViewHoder(@NonNull View itemView) {
                 super(itemView);
 
