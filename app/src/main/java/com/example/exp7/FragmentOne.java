@@ -89,14 +89,14 @@ public class FragmentOne extends Fragment {
         int position;
         position = mMyAdapter.getContextMenuPosition();
         if (item.getItemId() == delete) {
-            /*System.out.println(position);
+            System.out.println(position);
             mMyAdapter.delete(position);
 
             mRecyclerView.setAdapter(mMyAdapter);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            mRecyclerView.setLayoutManager(layoutManager);*/
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+            mRecyclerView.setLayoutManager(layoutManager);
 
-            mNewsList.remove(position);
+            /*mNewsList.remove(position);*/
             mMyAdapter.notifyDataSetChanged();
             new Datasaver().Save(FragmentOne.this.getContext(),mNewsList);
 
